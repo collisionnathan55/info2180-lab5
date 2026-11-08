@@ -5,14 +5,14 @@ function queryMain(PDO $conn) {
 
   // country query
   if (isset($_GET["country"]) && preg_match($alpha, $_GET["country"])) {
-    return countryQuery_byName($conn, $_GET["country"]);
+    return queryCountry_byName($conn, $_GET["country"]);
   }
 
   // default query
   return $conn->query("SELECT * FROM countries")->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function countryQuery_byName(PDO $db, string $country) {
+function queryCountry_byName(PDO $db, string $country) {
   $stmt = $db->prepare("SELECT * FROM countries WHERE countries.name LIKE :countryName");
   $param = $country . "%";
   $stmt->bindParam(":countryName", $param, PDO::PARAM_STR);
@@ -21,20 +21,40 @@ function countryQuery_byName(PDO $db, string $country) {
   return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function tableCountry ($results) {
+  $columns = ["name", "continent", "independence_year", "head_of_state"];
+
+  $e = "<table><tr>";
+  foreach ($columns as $c) {
+    $e .= "<th>" . ucwords(str_replace("_", " ", $c)) . "</th>";
+  }
+  $e .= "</tr>";
+
+  foreach ($results as $country) {
+    $e .= "<tr>";
+    foreach ($columns as $col) {
+      $e .= "<td>" . $country[$col] . "</td>";
+    }
+    $e .= "</tr>";
+  }
+
+  $e .= "</table>";
+  return $e;
+}
+
 ?>
 
 <?php
-
 $host = 'localhost';
 $username = 'lab5_user';
 $password = 'password123';
 $dbname = 'world';
 $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-$results = queryMain($conn);
-?>
 
-<ul>
-<?php foreach ($results as $row): ?>
-  <li><?= $row['name'] . ' is ruled by ' . $row['head_of_state']; ?></li>
-<?php endforeach; ?>
-</ul>
+$results = queryMain($conn);
+
+if (isset($_GET["country"])) {
+  echo tableCountry($results);
+  return;
+}
+?>
