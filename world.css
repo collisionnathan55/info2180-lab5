@@ -1,1 +1,119 @@
-/* Add your own styles */
+body {
+    margin: 0rem;
+    background-color: whitesmoke;
+
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1rem;
+
+    background-color: #c0e4f1;
+    border-style: solid;
+    border-color: lightblue;
+    border-width: 0rem;
+    border-bottom-width: 0.3rem;
+
+    padding: 0.5rem;
+}
+header > h1 {
+    font-family: serif;
+    font-weight: 200;
+    font-size: 3rem;
+}
+
+hr {
+    margin: 0rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+/* INTERFACE */
+
+#controls {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 0.5fr 4fr 1fr 1fr 0.5fr;
+    align-items: start;
+    column-gap: 1rem;
+
+    padding: 1rem;
+}
+#controls > div {
+    display: grid;
+    grid-template-rows: 1fr 0.5fr;
+    grid-template-columns: 1fr;
+    row-gap: 0.25rem;
+
+    grid-column: 2;
+}
+#controls > div > input {
+    grid-row: 1;
+
+    font-size: 1.1rem;
+    text-indent: 1rem;
+    letter-spacing: 0.5rem;
+    border-color: white;
+
+    height: 2rem;
+}
+#controls > div > label {
+    grid-row: 2;
+    font-family: monospace;
+    font-size: 1rem;
+}
+#controls > button {
+    font-family: monospace;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+
+    border-color: white;
+
+    height: 2rem;
+}
+#lookup-country {
+
+    grid-column: 3;
+}
+#lookup-city {
+
+    grid-column: 4;
+}
+
+/* RESULTS */
+
+#result {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+#result > table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+    table-layout: fixed;
+}
+
+#result > table * tr, th, td {
+    border-style: solid;
+    border-width: 0.1rem;
+    border-color: black;
+}
+
+#result > table * th, td {
+    padding: 0.5rem;
+}
+
+#result > h3 {
+    font-family: Helvetica, sans-serif;
+    margin-bottom: 0.5rem;
+}
+#result > h3:first-child {
+    margin-top: 0;
+}
