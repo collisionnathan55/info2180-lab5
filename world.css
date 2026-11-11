@@ -37,11 +37,13 @@ hr {
 #controls {
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: 0.5fr 4fr 1fr 1fr 0.5fr;
+    grid-template-columns: 3.5fr 1fr 1fr;
     align-items: start;
     column-gap: 1rem;
 
     padding: 1rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
 }
 #controls > div {
     display: grid;
@@ -49,7 +51,7 @@ hr {
     grid-template-columns: 1fr;
     row-gap: 0.25rem;
 
-    grid-column: 2;
+    grid-column: 1;
 }
 #controls > div > input {
     grid-row: 1;
@@ -69,19 +71,17 @@ hr {
 #controls > button {
     font-family: monospace;
     text-transform: uppercase;
-    font-size: 1.1rem;
+    font-size: 1rem;
 
     border-color: white;
 
     height: 2rem;
 }
 #lookup-country {
-
-    grid-column: 3;
+    grid-column: 2;
 }
 #lookup-city {
-
-    grid-column: 4;
+    grid-column: 3;
 }
 
 /* RESULTS */
