@@ -15,7 +15,12 @@ function queryMain(PDO $conn, int $lookup)
       return queryCity_byCountry_byName($conn, $_GET["country"]);
 
     default:
-      return $conn->query("SELECT * FROM countries")->fetchAll(PDO::FETCH_ASSOC);
+      if (isset($_GET["lookup"]) && $_GET["lookup"] == "city") {
+        return $conn->query("SELECT cities.name AS city, countries.name AS country, cities.district, cities.population FROM cities JOIN countries ON cities.country_code = countries.code ORDER BY cities.country_code ASC")->fetchAll(PDO::FETCH_ASSOC);
+      }
+      else {
+        return $conn->query("SELECT * FROM countries")->fetchAll(PDO::FETCH_ASSOC);
+      }
   }
 }
 
@@ -71,6 +76,11 @@ if (isset($_GET["lookup"]) && $_GET["lookup"] == "city") {
   $tableHeaders = ["city", "district", "population"];
   $result = queryMain($conn, 2);
   
+  if (count($result) <= 0 || !isset($result[0]["city"])) {
+    echo "<p>No entries found for this query.</p>";
+    return;
+  }
+
   // print multiple tables for each country
   $fuzzyCountries = array_unique(array_map(function($v) { return $v["country"]; }, $result));
   foreach ($fuzzyCountries as $country) {
@@ -80,6 +90,13 @@ if (isset($_GET["lookup"]) && $_GET["lookup"] == "city") {
 
 } else {
   $tableHeaders = ["name", "continent", "independence_year", "head_of_state"];
-  echo createTableByColumn($tableHeaders, queryMain($conn, 1));
+  $result = queryMain($conn, 1);
+
+  if (count($result) <= 0) {
+    echo "<p>No entries found for this query.</p>";
+    return;
+  }
+
+  echo createTableByColumn($tableHeaders, $result);
 }
 ?>
